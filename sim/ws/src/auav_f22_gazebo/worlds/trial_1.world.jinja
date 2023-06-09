@@ -1,0 +1,102 @@
+{%- from 'models/axial_scx10/axial_scx10.sdf.jinja' import axial_scx10 with context -%}
+{%- from 'models/px4vision/px4vision.sdf.jinja' import px4vision with context -%}
+<?xml version="1.0"?> 
+<sdf version="1.7">
+  <world name="trial_1_world">
+
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+
+    <plugin
+      filename="libignition-gazebo-physics-system.so"
+      name="ignition::gazebo::systems::Physics">
+    </plugin>
+    <plugin
+      filename="libignition-gazebo-scene-broadcaster-system.so"
+      name="ignition::gazebo::systems::SceneBroadcaster">
+    </plugin>
+    <plugin
+      filename="libignition-gazebo-user-commands-system.so"
+      name="ignition::gazebo::systems::UserCommands">
+    </plugin>
+    <plugin
+      filename="libignition-gazebo-sensors-system.so"
+      name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="libignition-gazebo-imu-system.so"
+            name="ignition::gazebo::systems::Imu">
+    </plugin>
+
+    <gui>
+      <camera name="user_camera">
+        <pose>0 -7 4 0 0.3 1.57</pose>
+      </camera>
+    </gui>
+
+    <scene>
+      <sky>
+        <clouds>
+          <speed>12</speed>
+        </clouds>
+      </sky>
+    </scene>
+
+    {% set light_spacing = 12 -%}
+    {%- set n_light_rows = 3 -%}
+    {%- set n_light_cols = 3 -%}
+    {%- for row in range(n_light_rows) -%}
+      {%- for col in range(n_light_cols) -%}
+        {% set x = light_spacing*(-n_light_rows/2 + row + 0.5) -%}
+        {% set y = light_spacing*(-n_light_cols/2 + col + 0.5) -%}
+        {% set id = row*n_light_rows + col %}
+    <light type="point" name="light{{id}}">
+      <pose>{{x}} {{y+8}} 15 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>1 1 1 1</specular>
+      <intensity>1</intensity>
+      <attenuation>
+        <range>100</range>
+        <constant>1</constant>
+        <linear>0.1</linear>
+        <quadratic>0</quadratic>
+      </attenuation>
+      <direction>0 0 -1</direction>
+    </light>
+      {%- endfor -%}
+    {%- endfor -%}
+
+    {{ axial_scx10(name='rover', pose=[0, 2, 0.1, 0, 0, 1.57], with_ball=True)|indent(4) }}
+
+    {{ px4vision(name='drone', pose=[0, 0, 0.07, 0, 0, 1.57], mav_id=0, cam_angle=np.deg2rad(0))|indent(4) }}
+
+    <include>
+      <pose>2 0 0 0 0 3.14</pose>
+      <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/foldable_chair</uri>
+    </include>
+
+    <include>
+      <pose>0 8 0 0 0 0</pose>
+      <uri>model://hangar_floor</uri>
+    </include>
+
+    <include>
+      <pose>0 8 0 0 0 0</pose>
+      <uri>model://sample_course_1</uri>
+    </include>
+
+<!--
+    <include>
+      <pose>-3 -1 0 0 0 2.0</pose>
+      <uri>model://person_standing</uri>
+    </include>
+-->
+
+  </world>
+</sdf>
+
+<!-- vim: set et fenc=utf-8 ff=unix sts=0 ft=xml sw=2 ts=2 : -->
