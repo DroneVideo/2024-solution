@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="everblock_grey">
+    <static>true</static>
+    <link name="block">
+      <pose>0 0 1.0668 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.762 0.762 2.1336</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://everblock_grey/meshes/everblock_grey.dae</uri>
+          </mesh>
+	  	</geometry>
+        <material>
+          <diffuse>0.05 0.05 0.05 1</diffuse>
+          <specular>0.8 0.8 0.8 1</specular>
+          <pbr>
+            <metal>
+              <!--<albedo_map>model://everblock_grey/meshes/textures/everblock_grey_albedo.png</albedo_map>-->
+              <roughness_map>model://everblock_grey/meshes/textures/everblock_grey_roughness.png</roughness_map>
+              <ambient_occlusion_map>model://everblock_grey/meshes/textures/everblock_grey_ao.png</ambient_occlusion_map>
+              <normal_map>model://everblock_grey/meshes/textures/everblock_grey_normal.png</normal_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
