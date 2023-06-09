@@ -14,6 +14,11 @@ def generate_launch_description():
             output='screen',
             shell=True,
         ),
+        ExecuteProcess(
+            cmd='python3 /home/docker/ws/src/auav_f22/scripts/rover_pos.py'.split(' '),
+            output='log',
+            shell=False
+        )
         #Node(
         #    package='auav_f22',
         #    executable='offboard',

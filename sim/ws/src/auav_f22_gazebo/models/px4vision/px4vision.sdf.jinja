@@ -204,15 +204,15 @@
 
   </link>
 
-  <!--<plugin name='p3d' filename='libgazebo_ros_p3d.so'>-->
-    <!--<robotNamespace>{{name}}</robotNamespace>-->
-    <!--<updateRate>10</updateRate>-->
-    <!--<bodyName>base_link</bodyName>-->
-    <!--<topicName>/qualisys/{{name}}/odom</topicName>-->
-    <!--<frameName>map</frameName>-->
-    <!--<xyzOffset>0 0 0</xyzOffset>-->
-    <!--<rpyOffset>0 0 0</rpyOffset>-->
-  <!--</plugin>-->
+  <plugin name='p3d' filename='libgazebo_ros_p3d.so'>
+    <robotNamespace>{{name}}</robotNamespace>
+    <updateRate>10</updateRate>
+    <bodyName>base_link</bodyName>
+    <topic>/qualisys/{{name}}/odom</topic>
+    <frameName>map</frameName>
+    <xyzOffset>0 0 0</xyzOffset>
+    <rpyOffset>0 0 0</rpyOffset>
+  </plugin>
 
   <!--<plugin name='magnetometer_plugin' filename='libgazebo_magnetometer_plugin.so'>-->
     <!--<robotNamespace/>-->

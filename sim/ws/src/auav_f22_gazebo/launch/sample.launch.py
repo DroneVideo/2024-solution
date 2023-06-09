@@ -8,6 +8,7 @@ from launch.conditions import IfCondition
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch.actions import ExecuteProcess
 
 def generate_launch_description():
     pkg_ros_ign_gazebo_demos = get_package_share_directory('ros_ign_gazebo_demos')
@@ -30,7 +31,8 @@ def generate_launch_description():
             '/rgbd_camera/depth_image@sensor_msgs/msg/Image@ignition.msgs.Image',
             '/rgbd_camera/points@sensor_msgs/msg/PointCloud2@ignition.msgs.PointCloudPacked',
             '/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist',
-            '/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry'
+            '/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
+            '/world/trial_1_world/dynamic_pose/info@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V'
         ],
         output='screen'
     )
@@ -42,9 +44,16 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
+    set_pose = ExecuteProcess(
+        cmd='python3 /workdir/src/auav_f22_gazebo/scripts/set_pose.py'.split(' '),
+        output='screen',
+        shell=True
+    )
+
     return LaunchDescription([
         ign_gazebo,
         DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,
         rviz,
+        set_pose
     ])

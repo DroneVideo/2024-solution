@@ -35,6 +35,9 @@ ENV LC_ALL=en_US.UTF-8
 ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 ENV XDG_RUNTIME_DIR=/tmp/runtime-docker
 
+ENV __NV_PRIME_RENDER_OFFLOAD=1
+ENV __GLX_VENDOR_LIBRARY_NAME=nvidia
+
 # install dependencies using scripts in a manner that will cache build
 # when one script is modified
 COPY install/base.sh /tmp/install/base.sh
