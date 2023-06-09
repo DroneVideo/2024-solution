@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="everblock_green">
+    <static>true</static>
+    <link name="block">
+      <pose>0 0 1.0668 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.4572 0.4572 2.1336</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://everblock_green/meshes/everblock_green.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0 0.2 0 1</diffuse>
+          <specular>0.8 0.8 0.8 1</specular>
+          <pbr>
+            <metal>
+              <!--<albedo_map>model://everblock_green/meshes/textures/everblock_green_albedo.png</albedo_map>-->
+              <roughness_map>model://everblock_green/meshes/textures/everblock_green_roughness.png</roughness_map>
+              <ambient_occlusion_map>model://everblock_green/meshes/textures/everblock_green_ao.png</ambient_occlusion_map>
+              <normal_map>model://everblock_green/meshes/textures/everblock_green_normal.png</normal_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
+<!-- vim: set et fenc=utf-8 ff=unix sts=0 sw=2 ts=2 : -->
