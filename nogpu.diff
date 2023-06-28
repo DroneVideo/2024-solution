@@ -1,8 +1,16 @@
 diff --git a/docker-compose.yml b/docker-compose.yml
-index f16b801..326560f 100644
+index 2ddd07e..e874eb2 100644
 --- a/docker-compose.yml
 +++ b/docker-compose.yml
-@@ -38,13 +38,8 @@ services:
+@@ -19,7 +19,6 @@ services:
+   sim:
+     container_name: sim
+     hostname: sim
+-    runtime: nvidia
+     image: jinensetpal/auav_f22:sim
+     command: terminator --geometry=800x500+800+0 -e ". /opt/ros/foxy/setup.sh && colcon build --symlink-install --event-handler console_direct+ && . ./install/setup.sh && ros2 launch auav_f22_gazebo sample.launch.py; read -p 'press enter'"
+     build:
+@@ -41,13 +40,6 @@ services:
        - ignition_config:/home/docker/.ignition
        - $PWD/sim/ws:/workdir:rw
      privileged: true
@@ -13,14 +21,59 @@ index f16b801..326560f 100644
 -            - driver: nvidia
 -              count: 1
 -              capabilities: [gpu]
-+
-+
      networks:
        app_net:
          ipv4_address: 172.16.238.2
-@@ -136,4 +131,4 @@ services:
-         ipv4_address: 172.16.238.13
+@@ -104,7 +96,6 @@ services:
+   onboard:
+     container_name: onboard
+     hostname: onboard
+-    runtime: nvidia
+     image: jinensetpal/auav_f22:onboard
+     #command: bash -c ". ~/ws/install/setup.sh && ros2 launch auav_f22 sample.launch.py"
+     command: terminator --geometry=800x500+0+0 -e ". ~/px4_ros_com_ros2/install/setup.sh && colcon build --symlink-install --event-handler console_direct+ && . ./install/setup.sh && ros2 launch auav_f22 sample.launch.py; read -p 'press enter'"
+@@ -120,13 +111,6 @@ services:
+     networks:
+       app_net:
+         ipv4_address: 172.16.238.12
+-    deploy:
+-      resources:
+-        reservations:
+-          devices:
+-            - driver: nvidia
+-              count: 1
+-              capabilities: [gpu]
  
  
--#  vim: set et fenc=utf-8 ff=unix sts=2 sw=2 ts=4 : 
-+#  vim: set et fenc=utf-8 ff=unix sts=2 sw=2 ts=4 :
+   # grader
+diff --git a/nogpu.diff b/nogpu.diff
+index f980013..e69de29 100644
+--- a/nogpu.diff
++++ b/nogpu.diff
+@@ -1,26 +0,0 @@
+-diff --git a/docker-compose.yml b/docker-compose.yml
+-index f16b801..326560f 100644
+---- a/docker-compose.yml
+-+++ b/docker-compose.yml
+-@@ -38,13 +38,8 @@ services:
+-       - ignition_config:/home/docker/.ignition
+-       - $PWD/sim/ws:/workdir:rw
+-     privileged: true
+--    deploy:
+--      resources:
+--        reservations:
+--          devices:
+--            - driver: nvidia
+--              count: 1
+--              capabilities: [gpu]
+-+
+-+
+-     networks:
+-       app_net:
+-         ipv4_address: 172.16.238.2
+-@@ -136,4 +131,4 @@ services:
+-         ipv4_address: 172.16.238.13
+- 
+- 
+--#  vim: set et fenc=utf-8 ff=unix sts=2 sw=2 ts=4 : 
+-+#  vim: set et fenc=utf-8 ff=unix sts=2 sw=2 ts=4 :
